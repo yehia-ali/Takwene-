@@ -1,0 +1,39 @@
+<div class="container mt-5">
+    <h2>Item List</h2>
+
+    <ul class="list-group mb-3">
+        @for (item of items; track $index) {
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            @if (editingIndex !== $index) {
+            <span>{{ item }}</span>
+            }
+            @else {
+            <input type="text" [(ngModel)]="editedItem" class="form-control w-75" />
+            }
+            <div class="d-flex ms-2">
+                @if (editingIndex !== $index) {
+                <button class="btn btn-primary btn-sm me-2" (click)="editItem($index)"><i class="bi bi-pencil"></i></button>
+                }
+                @else {
+                <button class="btn btn-success btn-sm me-2" (click)="saveEditedItem()"><i class="bi bi-check2"></i></button>
+                <button class="btn btn-secondary btn-sm me-2" (click)="cancelEdit()"> <i class="bi bi-x"></i></button>
+                }
+                <button class="btn btn-danger btn-sm" (click)="deleteItem($index)"><i class="bi bi-trash"></i></button>
+            </div>
+
+        </li>
+        }
+        @empty {
+            <li class="list-group-item border-0"><h3 class="text-danger text-center">There are no items.</h3></li>
+        }
+    </ul>
+
+    <form (ngSubmit)="addItem()">
+        <div class="form-group mb-3">
+            <label for="itemInput">Add a New Item:</label>
+            <input id="itemInput" type="text" [(ngModel)]="newItem" name="newItem" class="form-control"
+                placeholder="Enter new item">
+        </div>
+        <button type="submit" class="btn btn-success">Add Item</button>
+    </form>
+</div>
